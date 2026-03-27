@@ -139,13 +139,13 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 
 <header>
 <h1>Biologia - Matura</h1>
-<p>Arkusze, quizy i powtorka do matury z biologii</p>
+<p>Powtorka do matury rozszerzonej z biologii</p>
 </header>
 
 <nav id="nav">
 <button class="active" data-tab="home">Strona glowna</button>
 <button data-tab="arkusze">Arkusze maturalne</button>
-<button data-tab="quiz">Quizy maturalne</button>
+<button data-tab="quiz">Quizy powtorkowe</button>
 <button data-tab="generator">Generator matury</button>
 </nav>
 
@@ -154,12 +154,12 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 <div class="container">
 <div class="hero">
 <h2>Twoje narzedzie do powtorki z biologii</h2>
-<p>110+ pytan quizowych opartych na prawdziwych arkuszach CKE z lat 2015-2025, pogrupowanych tematycznie. Wszystkie oficjalne arkusze maturalne w jednym miejscu.</p>
+<p>140+ pytan w stylu maturalnym na poziomie rozszerzonym, pogrupowanych tematycznie. Oficjalne arkusze CKE do pobrania i generator probnych arkuszy.</p>
 </div>
 <div class="features">
-<div class="card"><div class="icon">&#127919;</div><h3>Quizy maturalne</h3><p>110+ pytan z arkuszy CKE 2015-2025. Filtruj po kategorii, roku, losuj zestawy.</p></div>
+<div class="card"><div class="icon">&#127919;</div><h3>Quizy powtorkowe</h3><p>110+ pytan zamknietych w stylu maturalnym. Filtruj po kategorii, losuj zestawy.</p></div>
 <div class="card"><div class="icon">&#128196;</div><h3>Arkusze CKE</h3><p>Oficjalne arkusze i klucze odpowiedzi z lat 2015-2025 do pobrania.</p></div>
-<div class="card"><div class="icon">&#128424;</div><h3>Generator matury</h3><p>Stworz wlasny arkusz z losowych pytan i wydrukuj do PDF.</p></div>
+<div class="card"><div class="icon">&#128424;</div><h3>Generator arkuszy</h3><p>Stworz probny arkusz (zamkniete + otwarte) i wydrukuj do PDF.</p></div>
 </div>
 </div>
 </div>
@@ -177,7 +177,7 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 <!-- QUIZ -->
 <div id="tab-quiz" class="tab">
 <div class="container">
-<h2 style="color:#2d6a4f;margin-bottom:1rem">Quizy maturalne z biologii</h2>
+<h2 style="color:#2d6a4f;margin-bottom:1rem">Pytania powtorkowe w stylu maturalnym</h2>
 <div class="quiz-toolbar">
 <select id="f-cat"><option value="all">Wszystkie kategorie</option></select>
 <select id="f-year"><option value="all">Wszystkie lata</option></select>
@@ -202,8 +202,8 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 <!-- GENERATOR MATURY -->
 <div id="tab-generator" class="tab">
 <div class="container">
-<h2 style="color:#2d6a4f;margin-bottom:1rem">Generator arkusza maturalnego</h2>
-<p style="color:#666;margin-bottom:1.5rem">Stwórz własny arkusz maturalny z losowych pytań. Wybierz opcje i wygeneruj PDF do wydruku.</p>
+<h2 style="color:#2d6a4f;margin-bottom:1rem">Generator probnego arkusza</h2>
+<p style="color:#666;margin-bottom:1.5rem">Stworz probny arkusz z pytan w stylu maturalnym (poziom rozszerzony). Wybierz opcje i wydrukuj do PDF.</p>
 
 <div class="gen-options card" style="margin-bottom:1.5rem">
 <h3>Opcje arkusza</h3>
@@ -381,7 +381,7 @@ function render(){
   box.innerHTML=items.map(q=>`
     <div class="q-card" id="q${q.id}">
       <div class="q-meta">
-        <span class="badge badge-year">Matura ${q.rok}</span>
+        <span class="badge badge-year">Tematyka ${q.rok}</span>
         <span class="badge badge-cat">${q.cat}</span>
       </div>
       <div class="q-text">${q.q}</div>
@@ -478,7 +478,7 @@ function generateExam(){
   const yearLabel=year==='all'?'2015-2025':year;
 
   let html=`<div class="exam-preview">
-    <h2 style="font-size:1.5rem">PROBNY ARKUSZ MATURALNY Z BIOLOGII</h2>
+    <h2 style="font-size:1.5rem">PROBNY ARKUSZ - BIOLOGIA ROZSZERZONA</h2>
     <p class="exam-sub" style="font-size:1.05rem;font-weight:600">Poziom rozszerzony</p>
     <p class="exam-sub">${catLabel} | Lata: ${yearLabel} | ${today}</p>
     <p class="exam-sub">Liczba zadan: ${totalQ} | Maksymalna liczba punktow: ${totalPkt} | Czas: ${Math.max(totalQ*4,60)} minut</p>
