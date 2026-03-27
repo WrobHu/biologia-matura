@@ -112,6 +112,11 @@ nav button.active{color:#fff;border-bottom-color:#95d5b2;background:rgba(255,255
 .exam-key h3{color:#2d6a4f;margin-bottom:.8rem}
 .exam-key-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.3rem}
 .exam-key-item{padding:.3rem .5rem;background:#f0faf4;border-radius:4px;font-size:.9rem}
+.exam-section-title{font-size:1.1rem;font-weight:700;color:#2d6a4f;margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #2d6a4f}
+.eq-pkt{display:inline-block;background:#e3e8ff;color:#3949ab;font-size:.8rem;padding:.15rem .5rem;border-radius:12px;margin-left:.5rem}
+.eq-lines{margin-top:.8rem}
+.eq-line{border-bottom:1px solid #bbb;height:1.8rem;margin-bottom:.2rem}
+.exam-key-open{margin-top:.5rem;padding:.5rem;background:#f9f9f9;border-left:3px solid #40916c;font-size:.85rem;line-height:1.5;white-space:pre-line}
 
 #print-area{display:none}
 
@@ -204,13 +209,23 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 <h3>Opcje arkusza</h3>
 <div class="gen-grid">
 <div class="gen-field">
-<label>Liczba pytan:</label>
-<select id="gen-count">
-<option value="10">10 pytan</option>
-<option value="15">15 pytan</option>
-<option value="20" selected>20 pytan</option>
-<option value="25">25 pytan</option>
-<option value="30">30 pytan</option>
+<label>Pytania zamkniete (ABCD):</label>
+<select id="gen-closed">
+<option value="5">5</option>
+<option value="8">8</option>
+<option value="10" selected>10</option>
+<option value="12">12</option>
+<option value="15">15</option>
+</select>
+</div>
+<div class="gen-field">
+<label>Pytania otwarte:</label>
+<select id="gen-open">
+<option value="5">5</option>
+<option value="8">8</option>
+<option value="10" selected>10</option>
+<option value="12">12</option>
+<option value="15">15</option>
 </select>
 </div>
 <div class="gen-field">
@@ -225,7 +240,6 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 <label>Klucz odpowiedzi:</label>
 <select id="gen-key">
 <option value="end">Na koncu arkusza</option>
-<option value="separate">Osobna strona</option>
 <option value="none">Bez klucza</option>
 </select>
 </div>
@@ -425,64 +439,107 @@ render();
   years.forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;ys.appendChild(o)});
 })();
 
-let examQuestions=[];
+let examClosed=[],examOpen=[];
 
 function generateExam(){
-  const count=+document.getElementById('gen-count').value;
+  const nClosed=+document.getElementById('gen-closed').value;
+  const nOpen=+document.getElementById('gen-open').value;
   const cat=document.getElementById('gen-cat').value;
   const year=document.getElementById('gen-year').value;
   const keyMode=document.getElementById('gen-key').value;
 
-  let src=[...pytaniaMaturalne];
-  if(cat!=='all')src=src.filter(q=>q.cat===cat);
-  if(year!=='all')src=src.filter(q=>q.rok==year);
+  // Filter closed questions
+  let srcC=[...pytaniaMaturalne];
+  if(cat!=='all')srcC=srcC.filter(q=>q.cat===cat);
+  if(year!=='all')srcC=srcC.filter(q=>q.rok==year);
 
-  if(src.length===0){alert('Brak pytan dla wybranych filtrow!');return}
+  // Filter open questions
+  let srcO=[...pytaniaOtwarte];
+  if(cat!=='all')srcO=srcO.filter(q=>q.cat===cat);
+  if(year!=='all')srcO=srcO.filter(q=>q.rok==year);
 
-  const picked=shuffle([...src]).slice(0,Math.min(count,src.length));
+  if(srcC.length===0&&srcO.length===0){alert('Brak pytan dla wybranych filtrow!');return}
 
-  // Shuffle answers within each question and track new correct index
-  examQuestions=picked.map(q=>{
-    const indices=q.a.map((_,i)=>i);
-    const shuffled=shuffle([...indices]);
-    return {
-      ...q,
-      a:shuffled.map(i=>q.a[i]),
-      c:shuffled.indexOf(q.c)
-    };
+  // Pick and shuffle closed (with answer shuffle)
+  const pickedC=shuffle([...srcC]).slice(0,Math.min(nClosed,srcC.length));
+  examClosed=pickedC.map(q=>{
+    const idx=q.a.map((_,i)=>i);
+    const sh=shuffle([...idx]);
+    return {...q,a:sh.map(i=>q.a[i]),c:sh.indexOf(q.c)};
   });
 
+  // Pick open
+  examOpen=shuffle([...srcO]).slice(0,Math.min(nOpen,srcO.length));
+
+  const totalQ=examClosed.length+examOpen.length;
+  const totalPkt=examClosed.length + examOpen.reduce((s,q)=>s+q.pkt,0);
   const today=new Date().toLocaleDateString('pl-PL');
   const catLabel=cat==='all'?'Wszystkie kategorie':cat;
   const yearLabel=year==='all'?'2015-2025':year;
 
   let html=`<div class="exam-preview">
-    <h2>Probny arkusz maturalny z biologii</h2>
-    <p class="exam-sub">Poziom rozszerzony | ${catLabel} | Lata: ${yearLabel} | ${today}</p>
-    <p class="exam-sub">Liczba zadan: ${examQuestions.length} | Czas: ${examQuestions.length*3} minut</p>
-    <hr style="margin:1.5rem 0;border:none;border-top:1px solid #ddd">`;
+    <h2 style="font-size:1.5rem">PROBNY ARKUSZ MATURALNY Z BIOLOGII</h2>
+    <p class="exam-sub" style="font-size:1.05rem;font-weight:600">Poziom rozszerzony</p>
+    <p class="exam-sub">${catLabel} | Lata: ${yearLabel} | ${today}</p>
+    <p class="exam-sub">Liczba zadan: ${totalQ} | Maksymalna liczba punktow: ${totalPkt} | Czas: ${Math.max(totalQ*4,60)} minut</p>
+    <hr style="margin:1.5rem 0;border:none;border-top:2px solid #333">`;
 
-  examQuestions.forEach((q,i)=>{
-    html+=`<div class="exam-q">
-      <div class="eq-num">Zadanie ${i+1}. <span style="font-weight:400;color:#888;font-size:.85rem">[${q.cat} | ${q.rok}]</span></div>
-      <div class="eq-text">${q.q}</div>
-      <div class="eq-answers">
-        ${q.a.map((a,j)=>`<div>${String.fromCharCode(65+j)}. ${a}</div>`).join('')}
-      </div>
-    </div>`;
-  });
+  let num=1;
 
+  // CLOSED SECTION
+  if(examClosed.length>0){
+    html+=`<div class="exam-section-title">CZESC I - Zadania zamkniete (${examClosed.length} zadan, po 1 pkt)</div>
+    <p style="color:#555;font-size:.9rem;margin-bottom:1rem">W kazdym zadaniu zaznacz jedna prawidlowa odpowiedz.</p>`;
+    examClosed.forEach((q,i)=>{
+      html+=`<div class="exam-q">
+        <div class="eq-num">Zadanie ${num}. <span class="eq-pkt">1 pkt</span> <span style="font-weight:400;color:#888;font-size:.8rem">[${q.cat}]</span></div>
+        <div class="eq-text">${q.q}</div>
+        <div class="eq-answers">
+          ${q.a.map((a,j)=>`<div>${String.fromCharCode(65+j)}. ${a}</div>`).join('')}
+        </div>
+      </div>`;
+      num++;
+    });
+  }
+
+  // OPEN SECTION
+  if(examOpen.length>0){
+    html+=`<div class="exam-section-title">CZESC II - Zadania otwarte (${examOpen.length} zadan)</div>
+    <p style="color:#555;font-size:.9rem;margin-bottom:1rem">Odpowiedz na pytania pelnym zdaniem. Uzasadnij swoje odpowiedzi.</p>`;
+    examOpen.forEach((q,i)=>{
+      const lines=Math.max(4,Math.min(10,Math.ceil(q.ans.length/80)));
+      html+=`<div class="exam-q">
+        <div class="eq-num">Zadanie ${num}. <span class="eq-pkt">${q.pkt} pkt</span> <span style="font-weight:400;color:#888;font-size:.8rem">[${q.cat}]</span></div>
+        <div class="eq-text">${q.q}</div>
+        <div class="eq-lines">${'<div class="eq-line"></div>'.repeat(lines)}</div>
+      </div>`;
+      num++;
+    });
+  }
+
+  // ANSWER KEY
   if(keyMode!=='none'){
     html+=`<div class="exam-key">
-      <h3>Klucz odpowiedzi</h3>
+      <h3>KLUCZ ODPOWIEDZI</h3>`;
+    if(examClosed.length>0){
+      html+=`<h4 style="margin:.8rem 0 .5rem;color:#555">Czesc I - Zadania zamkniete:</h4>
       <div class="exam-key-grid">
-        ${examQuestions.map((q,i)=>`<div class="exam-key-item"><strong>${i+1}.</strong> ${String.fromCharCode(65+q.c)}</div>`).join('')}
-      </div>
-    </div>`;
+        ${examClosed.map((q,i)=>`<div class="exam-key-item"><strong>${i+1}.</strong> ${String.fromCharCode(65+q.c)}</div>`).join('')}
+      </div>`;
+    }
+    if(examOpen.length>0){
+      html+=`<h4 style="margin:1.5rem 0 .5rem;color:#555">Czesc II - Odpowiedzi do zadan otwartych:</h4>`;
+      examOpen.forEach((q,i)=>{
+        html+=`<div style="margin-bottom:1rem">
+          <strong>Zadanie ${examClosed.length+i+1}.</strong> (${q.pkt} pkt)
+          <div class="exam-key-open">${q.ans}</div>
+        </div>`;
+      });
+    }
+    html+=`</div>`;
   }
 
   html+=`</div>`;
-
   document.getElementById('gen-preview').innerHTML=html;
   document.getElementById('btn-print').disabled=false;
 }
