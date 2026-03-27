@@ -439,7 +439,18 @@ function generateExam(){
 
   if(src.length===0){alert('Brak pytan dla wybranych filtrow!');return}
 
-  examQuestions=shuffle([...src]).slice(0,Math.min(count,src.length));
+  const picked=shuffle([...src]).slice(0,Math.min(count,src.length));
+
+  // Shuffle answers within each question and track new correct index
+  examQuestions=picked.map(q=>{
+    const indices=q.a.map((_,i)=>i);
+    const shuffled=shuffle([...indices]);
+    return {
+      ...q,
+      a:shuffled.map(i=>q.a[i]),
+      c:shuffled.indexOf(q.c)
+    };
+  });
 
   const today=new Date().toLocaleDateString('pl-PL');
   const catLabel=cat==='all'?'Wszystkie kategorie':cat;
