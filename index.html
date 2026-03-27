@@ -90,8 +90,44 @@ nav button.active{color:#fff;border-bottom-color:#95d5b2;background:rgba(255,255
 .pagination button.active{background:#40916c;color:#fff;border-color:#40916c}
 .pagination button:hover:not(.active){background:#f0faf4}
 
+/* GENERATOR */
+.gen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem}
+.gen-field label{display:block;font-size:.85rem;color:#666;margin-bottom:.3rem}
+.gen-field select{width:100%;padding:.5rem;border-radius:8px;border:1px solid #ccc;font-size:.95rem}
+.gen-btn{padding:.6rem 1.5rem;border-radius:8px;border:none;font-size:1rem;cursor:pointer;background:#40916c;color:#fff}
+.gen-btn:hover{background:#2d6a4f}
+.gen-btn.secondary{background:#fff;color:#333;border:1px solid #ccc}
+.gen-btn.secondary:hover{background:#f5f5f5}
+.gen-btn:disabled{opacity:.5;cursor:default}
+
+.exam-preview{background:#fff;border-radius:12px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-top:1rem}
+.exam-preview h2{text-align:center;margin-bottom:.3rem}
+.exam-preview .exam-sub{text-align:center;color:#666;margin-bottom:2rem;font-size:.95rem}
+.exam-q{margin-bottom:1.5rem;page-break-inside:avoid}
+.exam-q .eq-num{font-weight:700;color:#2d6a4f;margin-bottom:.3rem}
+.exam-q .eq-text{margin-bottom:.5rem;line-height:1.5}
+.exam-q .eq-answers{margin-left:1.5rem}
+.exam-q .eq-answers div{padding:.2rem 0;line-height:1.4}
+.exam-key{margin-top:2rem;padding-top:1.5rem;border-top:2px solid #2d6a4f;page-break-before:always}
+.exam-key h3{color:#2d6a4f;margin-bottom:.8rem}
+.exam-key-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.3rem}
+.exam-key-item{padding:.3rem .5rem;background:#f0faf4;border-radius:4px;font-size:.9rem}
+
+#print-area{display:none}
+
 footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 @media(max-width:600px){header h1{font-size:1.5rem}nav button{padding:.7rem .8rem;font-size:.85rem}}
+
+/* PRINT STYLES */
+@media print{
+  body>*:not(#print-area){display:none!important}
+  #print-area{display:block!important;padding:0;margin:0}
+  #print-area *{color:#000!important}
+  .exam-preview{box-shadow:none;padding:0;border-radius:0}
+  .exam-q{margin-bottom:1.2rem}
+  .exam-key{page-break-before:always}
+  @page{margin:2cm}
+}
 </style>
 </head>
 <body>
@@ -105,6 +141,7 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 <button class="active" data-tab="home">Strona glowna</button>
 <button data-tab="arkusze">Arkusze maturalne</button>
 <button data-tab="quiz">Quizy maturalne</button>
+<button data-tab="generator">Generator matury</button>
 </nav>
 
 <!-- HOME -->
@@ -117,7 +154,7 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 <div class="features">
 <div class="card"><div class="icon">&#127919;</div><h3>Quizy maturalne</h3><p>110+ pytan z arkuszy CKE 2015-2025. Filtruj po kategorii, roku, losuj zestawy.</p></div>
 <div class="card"><div class="icon">&#128196;</div><h3>Arkusze CKE</h3><p>Oficjalne arkusze i klucze odpowiedzi z lat 2015-2025 do pobrania.</p></div>
-<div class="card"><div class="icon">&#128200;</div><h3>Sledz postepy</h3><p>Wyniki quizow na biezaco - zobacz ile juz umiesz.</p></div>
+<div class="card"><div class="icon">&#128424;</div><h3>Generator matury</h3><p>Stworz wlasny arkusz z losowych pytan i wydrukuj do PDF.</p></div>
 </div>
 </div>
 </div>
@@ -156,6 +193,55 @@ footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
 </div>
 </div>
 
+
+<!-- GENERATOR MATURY -->
+<div id="tab-generator" class="tab">
+<div class="container">
+<h2 style="color:#2d6a4f;margin-bottom:1rem">Generator arkusza maturalnego</h2>
+<p style="color:#666;margin-bottom:1.5rem">Stwórz własny arkusz maturalny z losowych pytań. Wybierz opcje i wygeneruj PDF do wydruku.</p>
+
+<div class="gen-options card" style="margin-bottom:1.5rem">
+<h3>Opcje arkusza</h3>
+<div class="gen-grid">
+<div class="gen-field">
+<label>Liczba pytan:</label>
+<select id="gen-count">
+<option value="10">10 pytan</option>
+<option value="15">15 pytan</option>
+<option value="20" selected>20 pytan</option>
+<option value="25">25 pytan</option>
+<option value="30">30 pytan</option>
+</select>
+</div>
+<div class="gen-field">
+<label>Kategoria:</label>
+<select id="gen-cat"><option value="all">Wszystkie (mieszane)</option></select>
+</div>
+<div class="gen-field">
+<label>Lata:</label>
+<select id="gen-year"><option value="all">Wszystkie lata</option></select>
+</div>
+<div class="gen-field">
+<label>Klucz odpowiedzi:</label>
+<select id="gen-key">
+<option value="end">Na koncu arkusza</option>
+<option value="separate">Osobna strona</option>
+<option value="none">Bez klucza</option>
+</select>
+</div>
+</div>
+<div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+<button class="gen-btn" onclick="generateExam()">Wygeneruj arkusz</button>
+<button class="gen-btn secondary" onclick="printExam()" id="btn-print" disabled>Drukuj / Zapisz PDF</button>
+</div>
+</div>
+
+<div id="gen-preview"></div>
+</div>
+</div>
+
+<!-- PRINT AREA (hidden on screen, visible in print) -->
+<div id="print-area"></div>
 
 <footer>&copy; 2026 Biologia - Matura</footer>
 
@@ -329,6 +415,74 @@ function updateStats(){
 initFilters();
 pool=pytaniaMaturalne;
 render();
+
+// ===== GENERATOR =====
+(function initGenFilters(){
+  const cats=[...new Set(pytaniaMaturalne.map(q=>q.cat))].sort();
+  const years=[...new Set(pytaniaMaturalne.map(q=>q.rok))].sort((a,b)=>b-a);
+  const cs=document.getElementById('gen-cat'),ys=document.getElementById('gen-year');
+  cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;cs.appendChild(o)});
+  years.forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;ys.appendChild(o)});
+})();
+
+let examQuestions=[];
+
+function generateExam(){
+  const count=+document.getElementById('gen-count').value;
+  const cat=document.getElementById('gen-cat').value;
+  const year=document.getElementById('gen-year').value;
+  const keyMode=document.getElementById('gen-key').value;
+
+  let src=[...pytaniaMaturalne];
+  if(cat!=='all')src=src.filter(q=>q.cat===cat);
+  if(year!=='all')src=src.filter(q=>q.rok==year);
+
+  if(src.length===0){alert('Brak pytan dla wybranych filtrow!');return}
+
+  examQuestions=shuffle([...src]).slice(0,Math.min(count,src.length));
+
+  const today=new Date().toLocaleDateString('pl-PL');
+  const catLabel=cat==='all'?'Wszystkie kategorie':cat;
+  const yearLabel=year==='all'?'2015-2025':year;
+
+  let html=`<div class="exam-preview">
+    <h2>Probny arkusz maturalny z biologii</h2>
+    <p class="exam-sub">Poziom rozszerzony | ${catLabel} | Lata: ${yearLabel} | ${today}</p>
+    <p class="exam-sub">Liczba zadan: ${examQuestions.length} | Czas: ${examQuestions.length*3} minut</p>
+    <hr style="margin:1.5rem 0;border:none;border-top:1px solid #ddd">`;
+
+  examQuestions.forEach((q,i)=>{
+    html+=`<div class="exam-q">
+      <div class="eq-num">Zadanie ${i+1}. <span style="font-weight:400;color:#888;font-size:.85rem">[${q.cat} | ${q.rok}]</span></div>
+      <div class="eq-text">${q.q}</div>
+      <div class="eq-answers">
+        ${q.a.map((a,j)=>`<div>${String.fromCharCode(65+j)}. ${a}</div>`).join('')}
+      </div>
+    </div>`;
+  });
+
+  if(keyMode!=='none'){
+    html+=`<div class="exam-key">
+      <h3>Klucz odpowiedzi</h3>
+      <div class="exam-key-grid">
+        ${examQuestions.map((q,i)=>`<div class="exam-key-item"><strong>${i+1}.</strong> ${String.fromCharCode(65+q.c)}</div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  html+=`</div>`;
+
+  document.getElementById('gen-preview').innerHTML=html;
+  document.getElementById('btn-print').disabled=false;
+}
+
+function printExam(){
+  const preview=document.getElementById('gen-preview').innerHTML;
+  if(!preview)return;
+  document.getElementById('print-area').innerHTML=preview;
+  window.print();
+  setTimeout(()=>{document.getElementById('print-area').innerHTML=''},500);
+}
 </script>
 </body>
 </html>
