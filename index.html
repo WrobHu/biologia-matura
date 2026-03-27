@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Biologia - Matura | Powtorka rozszerzona</title>
+<title>Biologia - Matura | Powtórka rozszerzona</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -168,13 +168,13 @@ footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-t
 
 <header>
 <h1>Biologia - Matura</h1>
-<p>Powtorka do matury rozszerzonej z biologii</p>
+<p>Powtórka do matury rozszerzonej z biologii</p>
 </header>
 
 <nav id="nav">
-<button class="active" data-tab="home">Strona glowna</button>
+<button class="active" data-tab="home">Strona główna</button>
 <button data-tab="arkusze">Arkusze maturalne</button>
-<button data-tab="quiz">Quizy powtorkowe</button>
+<button data-tab="quiz">Quizy powtórkowe</button>
 <button data-tab="generator">Generator matury</button>
 <button data-tab="fiszki">Fiszki</button>
 </nav>
@@ -183,13 +183,13 @@ footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-t
 <div id="tab-home" class="tab active">
 <div class="container">
 <div class="hero">
-<h2>Twoje narzedzie do powtorki z biologii</h2>
-<p>140+ pytan w stylu maturalnym na poziomie rozszerzonym, pogrupowanych tematycznie. Oficjalne arkusze CKE do pobrania i generator probnych arkuszy.</p>
+<h2>Twoje narzędzie do powtórki z biologii</h2>
+<p>140+ pytań w stylu maturalnym na poziomie rozszerzonym, pogrupowanych tematycznie. Oficjalne arkusze CKE do pobrania i generator próbnych arkuszy.</p>
 </div>
 <div class="features">
-<div class="card"><div class="icon">&#127919;</div><h3>Quizy powtorkowe</h3><p>110+ pytan zamknietych w stylu maturalnym. Filtruj po kategorii, losuj zestawy.</p></div>
+<div class="card"><div class="icon">&#127919;</div><h3>Quizy powtórkowe</h3><p>110+ pytań zamkniętych w stylu maturalnym. Filtruj po kategorii, losuj zestawy.</p></div>
 <div class="card"><div class="icon">&#128196;</div><h3>Arkusze CKE</h3><p>Oficjalne arkusze i klucze odpowiedzi z lat 2015-2025 do pobrania.</p></div>
-<div class="card"><div class="icon">&#128424;</div><h3>Generator arkuszy</h3><p>Stworz probny arkusz (zamkniete + otwarte) i wydrukuj do PDF.</p></div>
+<div class="card"><div class="icon">&#128424;</div><h3>Generator arkuszy</h3><p>Stwórz próbny arkusz (zamknięte + otwarte) i wydrukuj do PDF.</p></div>
 </div>
 </div>
 </div>
@@ -199,7 +199,7 @@ footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-t
 <div id="tab-arkusze" class="tab">
 <div class="container">
 <h2 style="color:#2d6a4f;margin-bottom:.5rem">Arkusze maturalne z biologii</h2>
-<p style="color:#666;margin-bottom:1.5rem">Oficjalne arkusze CKE i klucze odpowiedzi z lat 2015-2025. Kliknij rok, aby rozwinac linki.</p>
+<p style="color:#666;margin-bottom:1.5rem">Oficjalne arkusze CKE i klucze odpowiedzi z lat 2015-2025. Kliknij rok, aby rozwinąć linki.</p>
 <div id="arkusze-list"></div>
 </div>
 </div>
@@ -207,20 +207,20 @@ footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-t
 <!-- QUIZ -->
 <div id="tab-quiz" class="tab">
 <div class="container">
-<h2 style="color:#2d6a4f;margin-bottom:1rem">Pytania powtorkowe w stylu maturalnym</h2>
+<h2 style="color:#2d6a4f;margin-bottom:1rem">Pytania powtórkowe w stylu maturalnym</h2>
 <div class="quiz-toolbar">
 <select id="f-cat"><option value="all">Wszystkie kategorie</option></select>
 <select id="f-year"><option value="all">Wszystkie lata</option></select>
 <button onclick="startQuiz()">Rozpocznij quiz</button>
-<button onclick="randomQuiz()" class="secondary">Losowe 10 pytan</button>
+<button onclick="randomQuiz()" class="secondary">Losowe 10 pytań</button>
 <button onclick="randomQuiz(20)" class="secondary">Losowe 20</button>
-<button onclick="examMode()" class="secondary">Tryb egzaminu (30 pytan)</button>
+<button onclick="examMode()" class="secondary">Tryb egzaminu (30 pytań)</button>
 <button onclick="resetQuiz()" class="secondary">Resetuj</button>
 </div>
 <div class="score-bar">
 <div class="stat">Pytania: <strong id="s-total">0</strong></div>
 <div class="stat">Poprawne: <strong id="s-ok" style="color:#27ae60">0</strong></div>
-<div class="stat">Bledne: <strong id="s-bad" style="color:#c0392b">0</strong></div>
+<div class="stat">Błędne: <strong id="s-bad" style="color:#c0392b">0</strong></div>
 <div class="stat">Wynik: <strong id="s-pct">0%</strong></div>
 </div>
 <div id="quiz-box"></div>
@@ -232,14 +232,14 @@ footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-t
 <!-- GENERATOR MATURY -->
 <div id="tab-generator" class="tab">
 <div class="container">
-<h2 style="color:#2d6a4f;margin-bottom:1rem">Generator probnego arkusza</h2>
-<p style="color:#666;margin-bottom:1.5rem">Stworz probny arkusz z pytan w stylu maturalnym (poziom rozszerzony). Wybierz opcje i wydrukuj do PDF.</p>
+<h2 style="color:#2d6a4f;margin-bottom:1rem">Generator próbnego arkusza</h2>
+<p style="color:#666;margin-bottom:1.5rem">Stwórz próbny arkusz z pytań w stylu maturalnym (poziom rozszerzony). Wybierz opcje i wydrukuj do PDF.</p>
 
 <div class="gen-options card" style="margin-bottom:1.5rem">
 <h3>Opcje arkusza</h3>
 <div class="gen-grid">
 <div class="gen-field">
-<label>Pytania zamkniete (ABCD):</label>
+<label>Pytania zamknięte (ABCD):</label>
 <select id="gen-closed">
 <option value="5">5</option>
 <option value="8">8</option>
@@ -287,8 +287,8 @@ footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-t
 <!-- FISZKI -->
 <div id="tab-fiszki" class="tab">
 <div class="container">
-<h2 style="color:#2d6a4f;margin-bottom:1rem">Fiszki - kluczowe pojecia</h2>
-<p style="color:#666;margin-bottom:1rem">Kliknij fiszke, zeby odslonic definicje. Nauka najwazniejszych pojec do matury.</p>
+<h2 style="color:#2d6a4f;margin-bottom:1rem">Fiszki - kluczowe pojęcia</h2>
+<p style="color:#666;margin-bottom:1rem">Kliknij fiszkę, żeby odsłonić definicję. Nauka najważniejszych pojęć do matury.</p>
 <div class="fiszki-toolbar">
 <select id="fiszki-cat" onchange="renderFiszki()"><option value="all">Wszystkie kategorie</option></select>
 <button onclick="shuffleFiszki()" class="gen-btn secondary" style="font-size:.9rem">Wymieszaj</button>
@@ -323,59 +323,59 @@ const arkuszData = [
     {name:"Arkusz - maj 2025 (formula 2023)",url:"https://arkusze.pl/maturalne/biologia-2025-maj-matura-rozszerzona.pdf"},
     {name:"Odpowiedzi - maj 2025",url:"https://arkusze.pl/maturalne/biologia-2025-maj-matura-rozszerzona-odpowiedzi.pdf"},
     {name:"Arkusz - maj 2025 (stara formula 2015)",url:"https://arkusze.pl/maturalne/biologia-2025-maj-matura-stara-rozszerzona.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2025-poziom-rozszerzony-formula-2023"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2025-poziom-rozszerzony-formula-2023"}
   ]},
   {rok:2024,items:[
     {name:"Arkusz - maj 2024 (formula 2023)",url:"https://arkusze.pl/maturalne/biologia-2024-maj-matura-rozszerzona.pdf"},
     {name:"Odpowiedzi - maj 2024",url:"https://arkusze.pl/maturalne/biologia-2024-maj-matura-rozszerzona-odpowiedzi.pdf"},
     {name:"Arkusz probny - grudzien 2024",url:"https://arkusze.pl/maturalne/biologia-2024-grudzien-probna-rozszerzona.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2024-poziom-rozszerzony-formula-2023"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2024-poziom-rozszerzony-formula-2023"}
   ]},
   {rok:2023,items:[
     {name:"Arkusz - maj 2023 (formula 2023)",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2023/Arkusze_egzaminacyjne/2023/Biologia/MBIP-R0-100-2305-arkusz.pdf"},
     {name:"Zasady oceniania - 2023",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2023/Arkusze_egzaminacyjne/2023/Biologia/MBIP-R0-100-2305-zasady.pdf"},
     {name:"Arkusz - maj 2023 (formula 2015)",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2023/Biologia/EBIP-R0-100-2305.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2023-poziom-rozszerzony-formula-2023"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2023-poziom-rozszerzony-formula-2023"}
   ]},
   {rok:2022,items:[
     {name:"Arkusz - maj 2022",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2022/Biologia/EBIP-R0-100-2205.pdf"},
     {name:"Zasady oceniania - 2022",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2022/Biologia/EBIP-R0-100-2205-zasady.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2022-poziom-rozszerzony-nowy"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2022-poziom-rozszerzony-nowy"}
   ]},
   {rok:2021,items:[
     {name:"Arkusz - maj 2021",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2021/Biologia/poziom_rozszerzony/EBIP-R0-100-2105.pdf"},
     {name:"Zasady oceniania - 2021",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2021/Biologia/poziom_rozszerzony/EBIP-R0-100-2105-zasady.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2021-poziom-rozszerzony-nowy"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2021-poziom-rozszerzony-nowy"}
   ]},
   {rok:2020,items:[
     {name:"Arkusz - maj 2020",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2020/Biologia/EBIP-R0-100-2006.pdf"},
     {name:"Zasady oceniania - 2020",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2020/Biologia/EBIP-R0-100-2006-zasady.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2020-poziom-rozszerzony-nowy"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2020-poziom-rozszerzony-nowy"}
   ]},
   {rok:2019,items:[
     {name:"Arkusz - maj 2019",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2019/Biologia/EBIP-R0-100-1905.pdf"},
     {name:"Zasady oceniania - 2019",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2019/Biologia/EBIP-R0-100-1905-zasady.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2019-poziom-rozszerzony-nowy"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2019-poziom-rozszerzony-nowy"}
   ]},
   {rok:2018,items:[
     {name:"Arkusz - maj 2018",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2018/Biologia/EBIP-R0-100-1805.pdf"},
     {name:"Zasady oceniania - 2018",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2018/Biologia/EBIP-R0-100-1805-zasady.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2018-poziom-rozszerzony-nowy"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2018-poziom-rozszerzony-nowy"}
   ]},
   {rok:2017,items:[
     {name:"Arkusz - maj 2017",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2017/Biologia/EBIP-R0-100-1705.pdf"},
     {name:"Zasady oceniania - 2017",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2017/Biologia/EBIP-R0-100-1705-zasady.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2017-poziom-rozszerzony-nowy"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2017-poziom-rozszerzony-nowy"}
   ]},
   {rok:2016,items:[
     {name:"Arkusz - maj 2016",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2016/Biologia/EBIP-R0-100-1605.pdf"},
     {name:"Zasady oceniania - 2016",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2016/Biologia/EBIP-R0-100-1605-zasady.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2016-poziom-rozszerzony-nowy"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2016-poziom-rozszerzony-nowy"}
   ]},
   {rok:2015,items:[
     {name:"Arkusz - maj 2015",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2015/Biologia/EBIP-R0-100-1505.pdf"},
     {name:"Zasady oceniania - 2015",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2015/Biologia/EBIP-R0-100-1505-zasady.pdf"},
-    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2015-poziom-rozszerzony-nowy"}
+    {name:"Zadania z rozwiązaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2015-poziom-rozszerzony-nowy"}
   ]}
 ];
 
@@ -503,7 +503,7 @@ function generateExam(){
   if(cat!=='all')srcO=srcO.filter(q=>q.cat===cat);
   if(year!=='all')srcO=srcO.filter(q=>q.rok==year);
 
-  if(srcC.length===0&&srcO.length===0){alert('Brak pytan dla wybranych filtrow!');return}
+  if(srcC.length===0&&srcO.length===0){alert('Brak pytań dla wybranych filtrów!');return}
 
   // Pick and shuffle closed (with answer shuffle)
   const pickedC=shuffle([...srcC]).slice(0,Math.min(nClosed,srcC.length));
@@ -523,7 +523,7 @@ function generateExam(){
   const yearLabel=year==='all'?'2015-2025':year;
 
   let html=`<div class="exam-preview">
-    <h2 style="font-size:1.5rem">PROBNY ARKUSZ - BIOLOGIA ROZSZERZONA</h2>
+    <h2 style="font-size:1.5rem">PRÓBNY ARKUSZ - BIOLOGIA ROZSZERZONA</h2>
     <p class="exam-sub" style="font-size:1.05rem;font-weight:600">Poziom rozszerzony</p>
     <p class="exam-sub">${catLabel} | Lata: ${yearLabel} | ${today}</p>
     <p class="exam-sub">Liczba zadan: ${totalQ} | Maksymalna liczba punktow: ${totalPkt} | Czas: ${Math.max(totalQ*4,60)} minut</p>
@@ -533,8 +533,8 @@ function generateExam(){
 
   // CLOSED SECTION
   if(examClosed.length>0){
-    html+=`<div class="exam-section-title">CZESC I - Zadania zamkniete (${examClosed.length} zadan, po 1 pkt)</div>
-    <p style="color:#555;font-size:.9rem;margin-bottom:1rem">W kazdym zadaniu zaznacz jedna prawidlowa odpowiedz.</p>`;
+    html+=`<div class="exam-section-title">CZĘŚĆ I - Zadania zamknięte (${examClosed.length} zadań, po 1 pkt)</div>
+    <p style="color:#555;font-size:.9rem;margin-bottom:1rem">W każdym zadaniu zaznacz jedną prawidłową odpowiedź.</p>`;
     examClosed.forEach((q,i)=>{
       html+=`<div class="exam-q">
         <div class="eq-num">Zadanie ${num}. <span class="eq-pkt">1 pkt</span> <span style="font-weight:400;color:#888;font-size:.8rem">[${q.cat}]</span></div>
@@ -549,8 +549,8 @@ function generateExam(){
 
   // OPEN SECTION
   if(examOpen.length>0){
-    html+=`<div class="exam-section-title">CZESC II - Zadania otwarte (${examOpen.length} zadan)</div>
-    <p style="color:#555;font-size:.9rem;margin-bottom:1rem">Odpowiedz na pytania pelnym zdaniem. Uzasadnij swoje odpowiedzi.</p>`;
+    html+=`<div class="exam-section-title">CZĘŚĆ II - Zadania otwarte (${examOpen.length} zadań)</div>
+    <p style="color:#555;font-size:.9rem;margin-bottom:1rem">Odpowiedz na pytania pełnym zdaniem. Uzasadnij swoje odpowiedzi.</p>`;
     examOpen.forEach((q,i)=>{
       const lines=Math.max(4,Math.min(10,Math.ceil(q.ans.length/80)));
       html+=`<div class="exam-q">
@@ -567,13 +567,13 @@ function generateExam(){
     html+=`<div class="exam-key">
       <h3>KLUCZ ODPOWIEDZI</h3>`;
     if(examClosed.length>0){
-      html+=`<h4 style="margin:.8rem 0 .5rem;color:#555">Czesc I - Zadania zamkniete:</h4>
+      html+=`<h4 style="margin:.8rem 0 .5rem;color:#555">Część I - Zadania zamknięte:</h4>
       <div class="exam-key-grid">
         ${examClosed.map((q,i)=>`<div class="exam-key-item"><strong>${i+1}.</strong> ${String.fromCharCode(65+q.c)}</div>`).join('')}
       </div>`;
     }
     if(examOpen.length>0){
-      html+=`<h4 style="margin:1.5rem 0 .5rem;color:#555">Czesc II - Odpowiedzi do zadan otwartych:</h4>`;
+      html+=`<h4 style="margin:1.5rem 0 .5rem;color:#555">Część II - Odpowiedzi do zadań otwartych:</h4>`;
       examOpen.forEach((q,i)=>{
         html+=`<div style="margin-bottom:1rem">
           <strong>Zadanie ${examClosed.length+i+1}.</strong> (${q.pkt} pkt)
@@ -591,36 +591,36 @@ function generateExam(){
 
 // ===== FISZKI =====
 const fiszki = [
-  {cat:"Cytologia",term:"Mitochondrium",def:"Podwojna blona, matrix z wlasnym DNA (koliste) i rybosomami 70S. Polautonomiczne. Cykl Krebsa w matrix, lancuch oddechowy na wewnetrznej blonie. Teoria endosymbiozy Lynn Margulis."},
-  {cat:"Cytologia",term:"Blona komorkowa",def:"Dwuwarstwa fosfolipidowa z bialkami (model plynnej mozaiki). Bialka integralne = kanaly/transportery. Cholesterol stabilizuje plynnosc. Glikokaliks na zewnatrz (antygeny, rozpoznawanie)."},
-  {cat:"Cytologia",term:"Transport przez blone",def:"Bierny: dyfuzja prosta, osmoza, dyfuzja ulatwiona (z gradientem, bez ATP). Aktywny: wbrew gradientowi, wymaga ATP (pompa Na+/K+). Endo/egzocytoza: transport w pecherzykach."},
-  {cat:"Genetyka",term:"Kod genetyczny",def:"Trojkowy, zdegenerowany (wiele kodonow na 1 aminokwas), jednoznaczny, (prawie) uniwersalny, bezprzecinkowy, nienakładajacy sie. START: AUG (Met). STOP: UAA, UAG, UGA. 64 kodony → 20 aminokwasow."},
-  {cat:"Genetyka",term:"Ekspresja genu u eukariontow",def:"Transkrypcja (jadro): DNA → pre-mRNA. Obrobka: capping 5', poliA 3', splicing (wycinanie intronow). Transport do cytoplazmy. Translacja (rybosomy): mRNA → bialko. Modyfikacje post-translacyjne."},
-  {cat:"Genetyka",term:"Mejoza",def:"Podzial redukcyjny: 2n → 4 komorki 1n. Mejoza I: crossing-over (profaza I), rozdzielenie chromosomow homologicznych. Mejoza II: jak mitoza, rozdzielenie chromatyd siostrzanych. Zrodlo zmiennosci gamet."},
-  {cat:"Genetyka",term:"Prawo Hardy'ego-Weinberga",def:"p² + 2pq + q² = 1. Czestosci alleli stale gdy: duza populacja, losowe krzyzowanie, brak mutacji/migracji/doboru. Odchylenia = ewolucja. Pozwala obliczyc czestosci genotypow i nosicieli."},
-  {cat:"Genetyka",term:"PCR",def:"Powielanie DNA in vitro. Cykl: 1) Denaturacja 95°C (rozdzielenie nici), 2) Annealing 50-65°C (przylaczanie starterow), 3) Elongacja 72°C (Taq polimeraza dobudowuje). 30 cykli = miliardy kopii."},
-  {cat:"Genetyka",term:"Mutacje",def:"Genowe: substytucja (cicha/zmiany sensu/nonsensowna), insercja, delecja (przesuniecie ramki). Chromosomowe: delecja, duplikacja, inwersja, translokacja. Genomowe: aneuploidia (np. trisomia 21), poliploidia."},
-  {cat:"Metabolizm",term:"Glikoliza",def:"Cytoplazma. Glukoza (6C) → 2 pirogroniany (3C). Netto: 2 ATP + 2 NADH. Beztlenowa. Wspolna dla oddychania i fermentacji. Kluczowy enzym: fosfofruktokinaza (regulacja alosteryczna)."},
-  {cat:"Metabolizm",term:"Oddychanie tlenowe - bilans",def:"Glukoza + 6O₂ → 6CO₂ + 6H₂O + ~30-32 ATP. Etapy: glikoliza (cytoplazma, 2 ATP) → dekarboksylacja pirogronianu → cykl Krebsa (matrix, 2 GTP) → lancuch oddechowy + chemiosmoza (~26-28 ATP)."},
-  {cat:"Metabolizm",term:"Fotosynteza - faza jasna",def:"Tylakoidy. PSII: fotoliza H₂O → O₂ + e⁻ + H⁺. Transport elektronow → gradient H⁺ w lumen → ATP (chemiosmoza). PSI: NADP⁺ + H⁺ + e⁻ → NADPH. Fosforylacja niecykliczna: ATP + NADPH + O₂."},
-  {cat:"Metabolizm",term:"Cykl Calvina (faza ciemna)",def:"Stroma. RuBisCO wiaze CO₂ + RuBP(5C) → 2x 3-PGA(3C). Redukcja: ATP + NADPH → G3P. 6 obrotow = 1 glukoza. Zuzywa 18 ATP + 12 NADPH. U roslin C4: PEP-karboksylaza zageszcza CO₂."},
-  {cat:"Metabolizm",term:"Enzymy",def:"Biokatalizatory bialkowe. Obnizaja energie aktywacji. Specyficznosc substratowa (model indukowanego dopasowania). Czynniki: temp, pH (optimum), stezenie. Inhibicja kompetycyjna (miejsce aktywne) vs niekompetycyjna (allosteryczna)."},
-  {cat:"Fizjologia",term:"Hemoglobina i efekt Bohra",def:"Hb: 4 podjednostki, kazda z hemem (Fe²⁺ wiaze O₂). Efekt Bohra: niskie pH / wysokie pCO₂ → mniejsze powinowactwo do O₂ → latwiejsze oddawanie O₂ tkankom. Krzywa dysocjacji w prawo."},
-  {cat:"Fizjologia",term:"Nefron",def:"Klebuszek (filtracja cisnienowa) → kanalik proksymalny (reabsorpcja: glukoza, aminokwasy, Na⁺, 65% wody) → petla Henlego (gradient osmotyczny rdzenia) → kanalik dystalny → zbiorczy (ADH → akwaporyny → woda)."},
-  {cat:"Fizjologia",term:"Potencjal czynnosciowy",def:"Spoczynek: -70mV (K⁺ na zewn., Na⁺ wewn.). Bodziec nadprogowy → otwarcie kanalow Na⁺ → depolaryzacja (+30mV) → zamkniecie Na⁺, otwarcie K⁺ → repolaryzacja. Wszystko albo nic. Skokowo w mielinowanych."},
-  {cat:"Fizjologia",term:"Uklad odpornosciowy",def:"Nieswoista: bariery, fagocyty, NK, dopelniacz, zapalenie. Swoista humoralna: limf. B → plazmocyty → przeciwciala (IgG/M/A/E/D). Swoista komorkowa: limf. Tc (CD8+) zabijaja zakazone komorki. Pamiec immunologiczna."},
-  {cat:"Fizjologia",term:"Insulina vs glukagon",def:"Insulina (komorki beta): obniza glukoze → GLUT4, synteza glikogenu, lipogeneza. Glukagon (komorki alfa): podnosi glukoze → glikogenoliza, glukoneogeneza. Antagonizm. Cukrzyca I = brak insuliny, II = opornosc."},
-  {cat:"Fizjologia",term:"Synapsa chemiczna",def:"Impuls → Ca²⁺ do zakonczenia → egzocytoza pecherzykow z neuroprzekaz. → dyfuzja przez szczeline → receptor na blonie postsynaptycznej → pobudzenie/hamowanie. Acetylocholina, GABA, dopamina, serotonina."},
-  {cat:"Ekologia",term:"Sukcesja ekologiczna",def:"Pierwotna: nagi teren (lawa) → porosty → mszaki → rosliny zielne → krzewy → las. Wtorna: po zniszczeniu (pozar), z zachowana gleba. Klimaks = stabilne zbiorowisko koncowe. Wzrost bioroznorodnosci."},
-  {cat:"Ekologia",term:"Regula 10% (Lindeman)",def:"Z poziomu troficznego na kolejny przechodzi ~10% energii. Reszta: oddychanie (cieplo), odchody, niestrawione czesci. Dlatego lancuchy pokarmowe maja 4-5 ogniw. Piramida energii zawsze zweza sie ku gorze."},
-  {cat:"Ekologia",term:"Czynniki limitujace populacje",def:"Zależne od zagęszczenia: konkurencja, choroby, drapieżnictwo, pasożytnictwo. Niezależne: klęski żywiołowe, pogoda. Pojemność środowiska (K) = max liczebność. Wzrost logistyczny: krzywa S."},
-  {cat:"Ewolucja",term:"Dobor naturalny - 3 typy",def:"Kierunkowy: faworyzuje 1 skrajnosc (srednia sie przesuwa). Stabilizujacy: faworyzuje srednia, eliminuje skrajnosci. Dywersyfikujacy (rozrywajacy): faworyzuje obie skrajnosci, eliminuje srednie."},
-  {cat:"Ewolucja",term:"Dowody ewolucji",def:"Molekularne: homologia sekwencji DNA/bialek (najsilniejszy). Anatomiczne: narzady homologiczne, szczatkowe, atawizmy. Embriologiczne: podobienstwo zarodkow. Paleontologiczne: skamienialosci, formy przejsciowe."},
-  {cat:"Ewolucja",term:"Specjacja",def:"Allopatryczna: bariera geograficzna → izolacja → niezalezna ewolucja → nowy gatunek. Sympatryczna: bez izolacji geogr., np. poliploidia u roslin. Klucz: izolacja rozrodcza (pre- i postzygotyczna)."},
-  {cat:"Botanika",term:"Hormony roslinne",def:"Auksyny: wydluzanie komorek, fototropizm. Gibereliny: wzrost lodygi, kielkowanie. Cytokininy: podzialy komorkowe. Etylen (gaz): dojrzewanie owocow. ABA: zamykanie szparek, spocznk nasion."},
-  {cat:"Botanika",term:"Fotosynteza C3 vs C4 vs CAM",def:"C3: RuBisCO wiaze CO₂ bezposrednio, fotooddychanie w cieple. C4: PEP-karboksylaza zageszcza CO₂ (kukurydza, trzcina). CAM: szparki otwarte noca, CO₂ magazynowany jako jabłczan (kaktusy, gruboszowate)."},
-  {cat:"Mikrobiologia",term:"Wirusy",def:"Bezkomorkowe, obligatoryjne pasożyty. DNA lub RNA + kapsyd bialkowy (± osłonka lipidowa). Cykl lityczny: replikacja → liza. Lizogeniczny: DNA wirusa (profag) wbudowane w genom. Retrowirusy: RNA → DNA (odwrotna transkryptaza, np. HIV)."},
-  {cat:"Histologia",term:"4 typy tkanek",def:"Nablonkowa: pokrywa powierzchnie (plaska, szescienna, walcowata; jedno-/wielowarstwowa). Laczna: wlokna + macierz (luźna, zbita, kostna, chrzestna, krew). Miesniowa: szkieletowa/gladka/sercowa. Nerwowa: neurony + glejowe."}
+  {cat:"Cytologia",term:"Mitochondrium",def:"Podwójna błona, matrix z własnym DNA (koliste) i rybosomami 70S. Półautonomiczne. Cykl Krebsa w matrix, łańcuch oddechowy na wewnętrznej błonie. Teoria endosymbiozy Lynn Margulis."},
+  {cat:"Cytologia",term:"Błona komórkowa",def:"Dwuwarstwa fosfolipidowa z białkami (model płynnej mozaiki). Białka integralne = kanały/transportery. Cholesterol stabilizuje płynność. Glikokaliks na zewnątrz (antygeny, rozpoznawanie)."},
+  {cat:"Cytologia",term:"Transport przez błonę",def:"Bierny: dyfuzja prosta, osmoza, dyfuzja ułatwiona (z gradientem, bez ATP). Aktywny: wbrew gradientowi, wymaga ATP (pompa Na⁺/K⁺). Endo/egzocytoza: transport w pęcherzykach."},
+  {cat:"Genetyka",term:"Kod genetyczny",def:"Trójkowy, zdegenerowany (wiele kodonów na 1 aminokwas), jednoznaczny, (prawie) uniwersalny, bezprzecinkowy, nienakładający się. START: AUG (Met). STOP: UAA, UAG, UGA. 64 kodony → 20 aminokwasów."},
+  {cat:"Genetyka",term:"Ekspresja genu u eukariontów",def:"Transkrypcja (jądro): DNA → pre-mRNA. Obróbka: capping 5', poliA 3', splicing (wycinanie intronów). Transport do cytoplazmy. Translacja (rybosomy): mRNA → białko. Modyfikacje post-translacyjne."},
+  {cat:"Genetyka",term:"Mejoza",def:"Podział redukcyjny: 2n → 4 komórki 1n. Mejoza I: crossing-over (profaza I), rozdzielenie chromosomów homologicznych. Mejoza II: jak mitoza, rozdzielenie chromatyd siostrzanych. Źródło zmienności gamet."},
+  {cat:"Genetyka",term:"Prawo Hardy'ego-Weinberga",def:"p² + 2pq + q² = 1. Częstości alleli stałe gdy: duża populacja, losowe krzyżowanie, brak mutacji/migracji/doboru. Odchylenia = ewolucja. Pozwala obliczyć częstości genotypów i nosicieli."},
+  {cat:"Genetyka",term:"PCR",def:"Powielanie DNA in vitro. Cykl: 1) Denaturacja 95°C (rozdzielenie nici), 2) Annealing 50-65°C (przyłączanie starterów), 3) Elongacja 72°C (Taq polimeraza dobudowuje). 30 cykli = miliardy kopii."},
+  {cat:"Genetyka",term:"Mutacje",def:"Genowe: substytucja (cicha/zmiany sensu/nonsensowna), insercja, delecja (przesunięcie ramki). Chromosomowe: delecja, duplikacja, inwersja, translokacja. Genomowe: aneuploidia (np. trisomia 21), poliploidia."},
+  {cat:"Metabolizm",term:"Glikoliza",def:"Cytoplazma. Glukoza (6C) → 2 pirogroniany (3C). Netto: 2 ATP + 2 NADH. Beztlenowa. Wspólna dla oddychania i fermentacji. Kluczowy enzym: fosfofruktokinaza (regulacja alosteryczna)."},
+  {cat:"Metabolizm",term:"Oddychanie tlenowe - bilans",def:"Glukoza + 6O₂ → 6CO₂ + 6H₂O + ~30-32 ATP. Etapy: glikoliza (cytoplazma, 2 ATP) → dekarboksylacja pirogronianu → cykl Krebsa (matrix, 2 GTP) → łańcuch oddechowy + chemiosmoza (~26-28 ATP)."},
+  {cat:"Metabolizm",term:"Fotosynteza - faza jasna",def:"Tylakoidy. PSII: fotoliza H₂O → O₂ + e⁻ + H⁺. Transport elektronów → gradient H⁺ w lumen → ATP (chemiosmoza). PSI: NADP⁺ + H⁺ + e⁻ → NADPH. Fosforylacja niecykliczna: ATP + NADPH + O₂."},
+  {cat:"Metabolizm",term:"Cykl Calvina (faza ciemna)",def:"Stroma. RuBisCO wiąże CO₂ + RuBP(5C) → 2x 3-PGA(3C). Redukcja: ATP + NADPH → G3P. 6 obrotów = 1 glukoza. Zużywa 18 ATP + 12 NADPH. U roślin C4: PEP-karboksylaza zagęszcza CO₂."},
+  {cat:"Metabolizm",term:"Enzymy",def:"Biokatalizatory białkowe. Obniżają energię aktywacji. Specyficzność substratowa (model indukowanego dopasowania). Czynniki: temp., pH (optimum), stężenie. Inhibicja kompetycyjna (miejsce aktywne) vs niekompetycyjna (allosteryczna)."},
+  {cat:"Fizjologia",term:"Hemoglobina i efekt Bohra",def:"Hb: 4 podjednostki, każda z hemem (Fe²⁺ wiąże O₂). Efekt Bohra: niskie pH / wysokie pCO₂ → mniejsze powinowactwo do O₂ → łatwiejsze oddawanie O₂ tkankom. Krzywa dysocjacji w prawo."},
+  {cat:"Fizjologia",term:"Nefron",def:"Kłębuszek (filtracja ciśnieniowa) → kanalik proksymalny (reabsorpcja: glukoza, aminokwasy, Na⁺, 65% wody) → pętla Henlego (gradient osmotyczny rdzenia) → kanalik dystalny → zbiorczy (ADH → akwaporyny → woda)."},
+  {cat:"Fizjologia",term:"Potencjał czynnościowy",def:"Spoczynek: -70mV (K⁺ na zewn., Na⁺ wewn.). Bodziec nadprogowy → otwarcie kanałów Na⁺ → depolaryzacja (+30mV) → zamknięcie Na⁺, otwarcie K⁺ → repolaryzacja. Wszystko albo nic. Skokowo w mielinowanych."},
+  {cat:"Fizjologia",term:"Układ odpornościowy",def:"Nieswoista: bariery, fagocyty, NK, dopełniacz, zapalenie. Swoista humoralna: limf. B → plazmocyty → przeciwciała (IgG/M/A/E/D). Swoista komórkowa: limf. Tc (CD8+) zabijają zakażone komórki. Pamięć immunologiczna."},
+  {cat:"Fizjologia",term:"Insulina vs glukagon",def:"Insulina (komórki beta): obniża glukozę → GLUT4, synteza glikogenu, lipogeneza. Glukagon (komórki alfa): podnosi glukozę → glikogenoliza, glukoneogeneza. Antagonizm. Cukrzyca I = brak insuliny, II = oporność."},
+  {cat:"Fizjologia",term:"Synapsa chemiczna",def:"Impuls → Ca²⁺ do zakończenia → egzocytoza pęcherzyków z neuroprzekaźnikiem → dyfuzja przez szczelinę → receptor na błonie postsynaptycznej → pobudzenie/hamowanie. Acetylocholina, GABA, dopamina, serotonina."},
+  {cat:"Ekologia",term:"Sukcesja ekologiczna",def:"Pierwotna: nagi teren (lawa) → porosty → mszaki → rośliny zielne → krzewy → las. Wtórna: po zniszczeniu (pożar), z zachowaną glebą. Klimaks = stabilne zbiorowisko końcowe. Wzrost bioróżnorodności."},
+  {cat:"Ekologia",term:"Reguła 10% (Lindeman)",def:"Z poziomu troficznego na kolejny przechodzi ~10% energii. Reszta: oddychanie (ciepło), odchody, niestrawione części. Dlatego łańcuchy pokarmowe mają 4-5 ogniw. Piramida energii zawsze zwęża się ku górze."},
+  {cat:"Ekologia",term:"Czynniki limitujące populację",def:"Zależne od zagęszczenia: konkurencja, choroby, drapieżnictwo, pasożytnictwo. Niezależne: klęski żywiołowe, pogoda. Pojemność środowiska (K) = max liczebność. Wzrost logistyczny: krzywa S."},
+  {cat:"Ewolucja",term:"Dobór naturalny - 3 typy",def:"Kierunkowy: faworyzuje 1 skrajność (średnia się przesuwa). Stabilizujący: faworyzuje średnią, eliminuje skrajności. Dywersyfikujący (rozrywający): faworyzuje obie skrajności, eliminuje średnie."},
+  {cat:"Ewolucja",term:"Dowody ewolucji",def:"Molekularne: homologia sekwencji DNA/białek (najsilniejszy). Anatomiczne: narządy homologiczne, szczątkowe, atawizmy. Embriologiczne: podobieństwo zarodków. Paleontologiczne: skamieniałości, formy przejściowe."},
+  {cat:"Ewolucja",term:"Specjacja",def:"Allopatryczna: bariera geograficzna → izolacja → niezależna ewolucja → nowy gatunek. Sympatryczna: bez izolacji geogr., np. poliploidia u roślin. Klucz: izolacja rozrodcza (pre- i postzygotyczna)."},
+  {cat:"Botanika",term:"Hormony roślinne",def:"Auksyny: wydłużanie komórek, fototropizm. Gibereliny: wzrost łodygi, kiełkowanie. Cytokininy: podziały komórkowe. Etylen (gaz): dojrzewanie owoców. ABA: zamykanie szparek, spoczynek nasion."},
+  {cat:"Botanika",term:"Fotosynteza C3 vs C4 vs CAM",def:"C3: RuBisCO wiąże CO₂ bezpośrednio, fotooddychanie w cieple. C4: PEP-karboksylaza zagęszcza CO₂ (kukurydza, trzcina). CAM: szparki otwarte nocą, CO₂ magazynowany jako jabłczan (kaktusy, gruboszowate)."},
+  {cat:"Mikrobiologia",term:"Wirusy",def:"Bezkomórkowe, obligatoryjne pasożyty. DNA lub RNA + kapsyd białkowy (± osłonka lipidowa). Cykl lityczny: replikacja → liza. Lizogeniczny: DNA wirusa (profag) wbudowane w genom. Retrowirusy: RNA → DNA (odwrotna transkryptaza, np. HIV)."},
+  {cat:"Histologia",term:"4 typy tkanek",def:"Nabłonkowa: pokrywa powierzchnie (płaska, sześcienna, walcowata; jedno-/wielowarstwowa). Łączna: włókna + macierz (luźna, zbita, kostna, chrzęstna, krew). Mięśniowa: szkieletowa/gładka/sercowa. Nerwowa: neurony + glejowe."}
 ];
 
 let fiszkiPool=[...fiszki];
@@ -642,7 +642,7 @@ function renderFiszki(){
         <div class="fiszka-front">
           <div class="f-cat">${f.cat}</div>
           <div class="f-term">${f.term}</div>
-          <div class="f-flip-hint"><span class="flip-icon"></span> Kliknij aby odkryc</div>
+          <div class="f-flip-hint"><span class="flip-icon"></span> Kliknij, aby odkryć</div>
         </div>
         <div class="fiszka-back">
           <div class="f-cat-back">${f.cat}</div>
