@@ -112,6 +112,18 @@ nav button.active{color:#fff;border-bottom-color:#52b788;background:rgba(255,255
 .eq-line{border-bottom:1px solid #ccc;height:1.8rem;margin-bottom:.2rem}
 .exam-key-open{margin-top:.5rem;padding:.6rem .8rem;background:#f9fafb;border-left:3px solid #40916c;font-size:.85rem;line-height:1.6;white-space:pre-line;border-radius:0 6px 6px 0}
 
+/* FISZKI */
+.fiszki-toolbar{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center}
+.fiszki-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.fiszka{background:#fff;border-radius:14px;padding:1.3rem;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .2s,box-shadow .2s;min-height:140px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.fiszka:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.fiszka .f-cat{font-size:.72rem;font-weight:600;color:#52b788;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+.fiszka .f-term{font-size:1.05rem;font-weight:700;color:#1b4332;margin-bottom:.5rem}
+.fiszka .f-def{font-size:.88rem;color:#555;line-height:1.5;max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0}
+.fiszka.open .f-def{max-height:300px;opacity:1}
+.fiszka .f-hint{font-size:.78rem;color:#aaa;margin-top:auto;padding-top:.3rem}
+.fiszka.open .f-hint{display:none}
+
 #print-area{display:none}
 
 footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-top:1px solid #e8e8e8;margin-top:2rem}
@@ -153,6 +165,7 @@ footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-t
 <button data-tab="arkusze">Arkusze maturalne</button>
 <button data-tab="quiz">Quizy powtorkowe</button>
 <button data-tab="generator">Generator matury</button>
+<button data-tab="fiszki">Fiszki</button>
 </nav>
 
 <!-- HOME -->
@@ -257,6 +270,19 @@ footer{text-align:center;padding:1.5rem 1rem;color:#bbb;font-size:.8rem;border-t
 </div>
 
 <div id="gen-preview"></div>
+</div>
+</div>
+
+<!-- FISZKI -->
+<div id="tab-fiszki" class="tab">
+<div class="container">
+<h2 style="color:#2d6a4f;margin-bottom:1rem">Fiszki - kluczowe pojecia</h2>
+<p style="color:#666;margin-bottom:1rem">Kliknij fiszke, zeby odslonic definicje. Nauka najwazniejszych pojec do matury.</p>
+<div class="fiszki-toolbar">
+<select id="fiszki-cat" onchange="renderFiszki()"><option value="all">Wszystkie</option></select>
+<button onclick="shuffleFiszki()" class="gen-btn secondary" style="font-size:.9rem">Wymieszaj</button>
+</div>
+<div id="fiszki-box" class="fiszki-grid"></div>
 </div>
 </div>
 
@@ -548,6 +574,67 @@ function generateExam(){
   html+=`</div>`;
   document.getElementById('gen-preview').innerHTML=html;
   document.getElementById('btn-print').disabled=false;
+}
+
+// ===== FISZKI =====
+const fiszki = [
+  {cat:"Cytologia",term:"Mitochondria",def:"Organella otoczone podwójną błoną, miejsce oddychania tlenowego (cykl Krebsa, łańcuch oddechowy). Mają własne DNA i rybosomy 70S (półautonomiczne). Teoria endosymbiozy - pochodzą od wolno żyjących bakterii tlenowych."},
+  {cat:"Cytologia",term:"Chloroplasty",def:"Organella fotosyntezy u roślin. Podwójna błona + tylakoidy (grana). Faza jasna na tylakoidach, cykl Calvina w stromie. Własne DNA i rybosomy. Pochodzą od sinic (endosymbioza)."},
+  {cat:"Cytologia",term:"Aparat Golgiego",def:"Stos spłaszczonych cystern błonowych. Modyfikuje, sortuje i pakuje białka z RER do pęcherzyków transportujących. Glikozylacja białek, tworzenie lizosomów."},
+  {cat:"Cytologia",term:"Osmoza",def:"Dyfuzja wody przez błonę półprzepuszczalną z roztworu hipotonicznego do hipertonicznego. Nie wymaga energii. Plazmoliza = utrata wody w roztworze hipertonicznym."},
+  {cat:"Cytologia",term:"Transport aktywny",def:"Przenoszenie substancji wbrew gradientowi stężeń. Wymaga ATP i białek transportowych (pomp). Przykład: pompa Na⁺/K⁺-ATPaza (3 Na⁺ na zewnątrz, 2 K⁺ do wewnątrz)."},
+  {cat:"Genetyka",term:"Kod genetyczny",def:"Trójkowy, zdegenerowany, jednoznaczny, uniwersalny, nieprzekrywający się, bezprzecinkowy. Kodon startu: AUG (metionina). Kodony STOP: UAA, UAG, UGA. 64 kodony kodują 20 aminokwasów."},
+  {cat:"Genetyka",term:"Crossing-over",def:"Wymiana fragmentów chromatyd niesiostrzanych chromosomów homologicznych w profazie I mejozy. Zwiększa zmienność genetyczną gamet. Częstość zależy od odległości genów na chromosomie."},
+  {cat:"Genetyka",term:"Prawo Hardy'ego-Weinberga",def:"p² + 2pq + q² = 1 oraz p + q = 1. Częstości alleli stałe gdy: duża populacja, losowe krzyżowanie, brak mutacji, migracji i doboru. Odstępstwa = ewolucja zachodzi."},
+  {cat:"Genetyka",term:"Epigenetyka",def:"Dziedziczne zmiany ekspresji genów BEZ zmian sekwencji DNA. Mechanizmy: metylacja DNA (wyciszanie), acetylacja histonów (aktywacja), modyfikacje chromatyny. Przykład: imprinting genomowy."},
+  {cat:"Genetyka",term:"PCR (reakcja łańcuchowa polimerazy)",def:"Amplifikacja fragmentu DNA in vitro. Cykl: 1) denaturacja 95°C, 2) przyłączanie starterów 50-65°C, 3) elongacja 72°C (polimeraza Taq). Potrzebne: matryca DNA, startery, dNTP, Taq polimeraza."},
+  {cat:"Metabolizm",term:"Glikoliza",def:"Rozkład glukozy (6C) do 2 pirogronianów (3C). Zachodzi w cytoplazmie. Bilans netto: 2 ATP + 2 NADH. Nie wymaga tlenu. Wspólny etap dla oddychania tlenowego i fermentacji."},
+  {cat:"Metabolizm",term:"Cykl Krebsa",def:"Zachodzi w matrix mitochondrialnej. Acetylo-CoA (2C) + szczawiooctan (4C) → cytrynian (6C) → seria reakcji → 2CO₂ + 3NADH + 1FADH₂ + 1GTP na obrót. Dwa obroty na cząsteczkę glukozy."},
+  {cat:"Metabolizm",term:"Łańcuch oddechowy + chemiosmoza",def:"Wewnętrzna błona mitochondrialna. Kompleksy I-IV przenoszą elektrony z NADH/FADH₂ na O₂ (→ H₂O). Energia pompuje H⁺ do przestrzeni międzybłonowej. Gradient napędza syntazę ATP. ~30-32 ATP/glukoza."},
+  {cat:"Metabolizm",term:"Fotosynteza - faza jasna",def:"Na tylakoidach. Fotosystem II → fotoliza H₂O → O₂ + H⁺ + e⁻. Transport elektronów → gradient H⁺ → ATP. Fotosystem I → NADP⁺ → NADPH. Produkty: ATP, NADPH, O₂."},
+  {cat:"Metabolizm",term:"Fotosynteza - cykl Calvina",def:"W stromie chloroplastu. RuBisCO wiąże CO₂ z RuBP (5C) → 2× 3-PGA (3C) → redukcja (ATP+NADPH) → G3P → glukoza. Regeneracja RuBP. 6 CO₂ → 1 glukoza. Zużywa 18 ATP + 12 NADPH."},
+  {cat:"Fizjologia czlowieka",term:"Efekt Bohra",def:"Spadek powinowactwa hemoglobiny do O₂ przy obniżeniu pH (wzrost CO₂, H⁺). Znaczenie: w pracujących mięśniach (dużo CO₂) hemoglobina łatwiej oddaje tlen. Krzywa dysocjacji przesuwa się w prawo."},
+  {cat:"Fizjologia czlowieka",term:"Potencjał czynnościowy",def:"Szybka zmiana potencjału błonowego neuronu. Depolaryzacja: otwarcie kanałów Na⁺ (napływ Na⁺). Repolaryzacja: otwarcie kanałów K⁺ (wypływ K⁺). Zasada 'wszystko albo nic'. Przewodzenie skokowe w włóknach mielinowanych."},
+  {cat:"Fizjologia czlowieka",term:"Nefron",def:"Jednostka strukturalno-funkcjonalna nerki. Kłębuszek nerkowy (filtracja) → kanalik proksymalny (reabsorpcja glukozy, aminokwasów, Na⁺) → pętla Henlego (gradient osmotyczny) → kanalik dystalny → kanalik zbiorczy (ADH reguluje reabsorpcję wody)."},
+  {cat:"Fizjologia czlowieka",term:"Insulina vs glukagon",def:"Insulina (komórki beta): obniża glukozę - stymuluje wychwyt glukozy (GLUT4), syntezę glikogenu, lipogenezę. Glukagon (komórki alfa): podnosi glukozę - glikogenoliza, glukoneogeneza. Antagonistyczne działanie."},
+  {cat:"Immunologia",term:"Odporność swoista",def:"Humoralna: limfocyty B → plazmocyty → przeciwciała (IgG, IgM, IgA, IgE, IgD). Komórkowa: limfocyty T cytotoksyczne (CD8+) niszczą zakażone komórki. Limfocyty T pomocnicze (CD4+) koordynują odpowiedź. Pamięć immunologiczna."},
+  {cat:"Immunologia",term:"Szczepionka vs surowica",def:"Szczepionka: antygeny (osłabione/zabite patogeny) → odporność czynna sztuczna (pamięć immunologiczna, wolna). Surowica: gotowe przeciwciała → odporność bierna sztuczna (natychmiastowa, ale krótkotrwała, bez pamięci)."},
+  {cat:"Ekologia",term:"Sukcesja ekologiczna",def:"Pierwotna: kolonizacja terenu bez gleby (lawa, skała). Wtórna: odtwarzanie po zniszczeniu (pożar, wycinka). Etapy: pionierzy → zbiorowiska przejściowe → klimaks. Wzrost bioróżnorodności i złożoności."},
+  {cat:"Ekologia",term:"Piramida ekologiczna",def:"Biomasy/energii/liczebności. Kolejne poziomy troficzne: producenci → I rzędu (roślinożercy) → II rzędu (drapieżniki) → szczytowi. Reguła 10% - tylko ~10% energii przechodzi na wyższy poziom."},
+  {cat:"Ewolucja",term:"Dobór naturalny",def:"Mechanizm ewolucji (Darwin). Warunki: zmienność cech, dziedziczność, nadprodukcja potomstwa, zróżnicowany sukces reprodukcyjny. Typy: kierunkowy, stabilizujący, dywersyfikujący. Nie ma celu - to filtr środowiskowy."},
+  {cat:"Ewolucja",term:"Specjacja",def:"Allopatryczna: bariera geograficzna izoluje populacje → niezależna ewolucja → odrębne gatunki. Sympatryczna: powstanie nowego gatunku bez izolacji geograficznej (np. poliploidia u roślin). Izolacja rozrodcza: prezygotyczna i postzygotyczna."},
+  {cat:"Botanika",term:"Transpiracja",def:"Parowanie wody z roślin (głównie szparki). Napędza transport wody w ksylemie (siła ssąca). Regulacja: szparki otwierają się przy świetle (napływ K⁺ → wzrost turgoru komórek szparkowych). ABA zamyka szparki przy suszy."},
+  {cat:"Botanika",term:"Podwójne zapłodnienie",def:"Unikalne dla okrytonasiennych. 1 plemnik + komórka jajowa → zygota (2n). 2 plemnik + jądra centralne → bielmo (3n, tkanka odżywcza dla zarodka). Zachodzi w woreczku zalążkowym po dotarciu łagiewki pyłkowej."},
+  {cat:"Mikrobiologia",term:"Wirusy - budowa i cykl",def:"Bezkomórkowe. DNA lub RNA + kapsyd białkowy (± osłonka lipidowa). Obligatoryjne pasożyty wewnątrzkomórkowe. Cykl lityczny: replikacja → liza komórki. Cykl lizogeniczny: DNA wirusa wbudowane w genom (profag). Retrowirusy: RNA → DNA (odwrotna transkryptaza)."},
+  {cat:"Mikrobiologia",term:"Antybiotyki",def:"Substancje hamujące wzrost lub zabijające bakterie. Mechanizmy: hamowanie syntezy ściany (penicylina), syntezy białek (tetracyklina, streptomycyna), replikacji DNA (fluorochinolony). NIE działają na wirusy. Oporność: geny oporności na plazmidach."},
+  {cat:"Histologia",term:"Cztery typy tkanek zwierzęcych",def:"1) Nabłonkowa: pokrywa powierzchnie, wyściela jamy. 2) Łączna: podporowa (kostna, chrzęstna), właściwa, krew. 3) Mięśniowa: szkieletowa (prążkowana, dowolna), gładka (mimowolna), sercowa (prążkowana, mimowolna). 4) Nerwowa: neurony + komórki glejowe."}
+];
+
+let fiszkiPool=[...fiszki];
+
+(function initFiszkiCats(){
+  const cats=[...new Set(fiszki.map(f=>f.cat))].sort();
+  const sel=document.getElementById('fiszki-cat');
+  cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;sel.appendChild(o)});
+  renderFiszki();
+})();
+
+function renderFiszki(){
+  const cat=document.getElementById('fiszki-cat').value;
+  let src=cat==='all'?[...fiszkiPool]:fiszkiPool.filter(f=>f.cat===cat);
+  document.getElementById('fiszki-box').innerHTML=src.map((f,i)=>`
+    <div class="fiszka" onclick="this.classList.toggle('open')">
+      <div class="f-cat">${f.cat}</div>
+      <div class="f-term">${f.term}</div>
+      <div class="f-def">${f.def}</div>
+      <div class="f-hint">Kliknij, aby odslonic</div>
+    </div>
+  `).join('');
+}
+
+function shuffleFiszki(){
+  fiszkiPool=shuffle([...fiszki]);
+  renderFiszki();
 }
 
 function printExam(){
