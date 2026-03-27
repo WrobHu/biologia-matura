@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korepetycje z Biologii | Quizy Maturalne</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f4f0;color:#333}
+header{background:linear-gradient(135deg,#2d6a4f,#40916c);color:#fff;padding:2rem 1rem;text-align:center}
+header h1{font-size:2.2rem;margin-bottom:.3rem}
+header p{font-size:1.1rem;opacity:.9}
+nav{display:flex;justify-content:center;flex-wrap:wrap;background:#1b4332}
+nav button{background:none;border:none;color:#b7e4c7;padding:1rem 1.5rem;font-size:.95rem;cursor:pointer;transition:.3s;border-bottom:3px solid transparent}
+nav button:hover{background:rgba(255,255,255,.1)}
+nav button.active{color:#fff;border-bottom-color:#95d5b2;background:rgba(255,255,255,.1)}
+.container{max-width:960px;margin:0 auto;padding:2rem 1rem}
+.tab{display:none}.tab.active{display:block}
+
+/* CARDS */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:2rem}
+.card{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.card .icon{font-size:2.5rem;margin-bottom:.8rem;text-align:center}
+.card h3{color:#2d6a4f;margin-bottom:.5rem}
+.card p{font-size:.95rem;color:#666;line-height:1.5}
+
+/* HERO */
+.hero{text-align:center;padding:2rem 0}
+.hero h2{font-size:1.8rem;color:#2d6a4f;margin-bottom:1rem}
+.hero p{font-size:1.05rem;line-height:1.7;color:#555;max-width:650px;margin:0 auto 1.5rem}
+
+/* ABOUT */
+.about{background:#fff;border-radius:12px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.about h2{color:#2d6a4f;margin-bottom:1rem}
+.about p{line-height:1.7;color:#555;margin-bottom:1rem}
+.about ul{margin:1rem 0 1rem 1.5rem}
+.about li{margin-bottom:.5rem;color:#555;line-height:1.5}
+
+/* OFFER */
+.offer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+.offer-card{background:#fff;border-radius:12px;padding:1.8rem;box-shadow:0 2px 10px rgba(0,0,0,.08);border-top:4px solid #40916c}
+.offer-card h3{color:#2d6a4f;margin-bottom:.5rem}
+.offer-card .price{font-size:1.4rem;font-weight:700;color:#40916c;margin:.5rem 0}
+.offer-card p{color:#666;font-size:.95rem;line-height:1.5}
+
+/* CONTACT */
+.contact-info{background:#fff;border-radius:12px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.contact-info h2{color:#2d6a4f;margin-bottom:1rem}
+.contact-item{display:flex;align-items:center;gap:.8rem;padding:.8rem 0;border-bottom:1px solid #eee}
+.contact-item:last-child{border-bottom:none}
+
+/* ARKUSZE */
+.year-section{background:#fff;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.year-section h3{color:#2d6a4f;font-size:1.3rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;cursor:pointer}
+.year-section h3 .arrow{transition:.3s;display:inline-block}
+.year-section h3.open .arrow{transform:rotate(90deg)}
+.year-links{display:none;gap:.5rem;flex-direction:column}
+.year-links.open{display:flex}
+.year-links a{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1rem;background:#f0faf4;border-radius:8px;color:#2d6a4f;text-decoration:none;font-size:.95rem;transition:.2s}
+.year-links a:hover{background:#d8f3dc}
+
+/* QUIZ */
+.quiz-toolbar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem;align-items:center}
+.quiz-toolbar select,.quiz-toolbar button{padding:.5rem 1rem;border-radius:8px;border:1px solid #ccc;font-size:.95rem;cursor:pointer}
+.quiz-toolbar button{background:#40916c;color:#fff;border:none}
+.quiz-toolbar button:hover{background:#2d6a4f}
+.quiz-toolbar button.secondary{background:#fff;color:#333;border:1px solid #ccc}
+.quiz-toolbar button.secondary:hover{background:#f5f5f5}
+
+.score-bar{background:#fff;border-radius:12px;padding:1rem 1.5rem;margin-bottom:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.08);display:flex;justify-content:space-around;flex-wrap:wrap;text-align:center;gap:.5rem}
+.score-bar .stat strong{color:#2d6a4f}
+
+.q-card{background:#fff;border-radius:12px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.q-card .q-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem}
+.q-card .badge{display:inline-block;padding:.2rem .6rem;border-radius:20px;font-size:.8rem}
+.q-card .badge-cat{background:#d8f3dc;color:#2d6a4f}
+.q-card .badge-year{background:#e3e8ff;color:#3949ab}
+.q-card .q-text{font-size:1.05rem;font-weight:600;margin-bottom:1rem;line-height:1.5}
+.answers{display:grid;gap:.5rem}
+.ans-btn{display:block;width:100%;text-align:left;padding:.8rem 1rem;border:2px solid #e0e0e0;border-radius:8px;background:#fff;cursor:pointer;font-size:.95rem;transition:.2s;line-height:1.4}
+.ans-btn:hover:not(.locked){border-color:#40916c;background:#f0faf4}
+.ans-btn.ok{border-color:#2d6a4f;background:#d8f3dc}
+.ans-btn.wrong{border-color:#c0392b;background:#fde8e8}
+.ans-btn.locked{cursor:default;opacity:.7}
+.ans-btn.locked.ok{opacity:1}
+.q-exp{margin-top:.8rem;padding:.8rem;background:#f0faf4;border-radius:8px;font-size:.9rem;color:#555;line-height:1.5;display:none}
+
+.pagination{display:flex;justify-content:center;gap:.3rem;margin-top:1.5rem;flex-wrap:wrap}
+.pagination button{padding:.4rem .8rem;border:1px solid #ccc;border-radius:6px;background:#fff;cursor:pointer;font-size:.9rem}
+.pagination button.active{background:#40916c;color:#fff;border-color:#40916c}
+.pagination button:hover:not(.active){background:#f0faf4}
+
+footer{text-align:center;padding:2rem 1rem;color:#999;font-size:.9rem}
+@media(max-width:600px){header h1{font-size:1.5rem}nav button{padding:.7rem .8rem;font-size:.85rem}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Biologia - Matura</h1>
+<p>Arkusze, quizy i powtorka do matury z biologii</p>
+</header>
+
+<nav id="nav">
+<button class="active" data-tab="home">Strona glowna</button>
+<button data-tab="arkusze">Arkusze maturalne</button>
+<button data-tab="quiz">Quizy maturalne</button>
+</nav>
+
+<!-- HOME -->
+<div id="tab-home" class="tab active">
+<div class="container">
+<div class="hero">
+<h2>Twoje narzedzie do powtorki z biologii</h2>
+<p>110+ pytan quizowych opartych na prawdziwych arkuszach CKE z lat 2015-2025, pogrupowanych tematycznie. Wszystkie oficjalne arkusze maturalne w jednym miejscu.</p>
+</div>
+<div class="features">
+<div class="card"><div class="icon">&#127919;</div><h3>Quizy maturalne</h3><p>110+ pytan z arkuszy CKE 2015-2025. Filtruj po kategorii, roku, losuj zestawy.</p></div>
+<div class="card"><div class="icon">&#128196;</div><h3>Arkusze CKE</h3><p>Oficjalne arkusze i klucze odpowiedzi z lat 2015-2025 do pobrania.</p></div>
+<div class="card"><div class="icon">&#128200;</div><h3>Sledz postepy</h3><p>Wyniki quizow na biezaco - zobacz ile juz umiesz.</p></div>
+</div>
+</div>
+</div>
+
+
+<!-- ARKUSZE MATURALNE -->
+<div id="tab-arkusze" class="tab">
+<div class="container">
+<h2 style="color:#2d6a4f;margin-bottom:.5rem">Arkusze maturalne z biologii</h2>
+<p style="color:#666;margin-bottom:1.5rem">Oficjalne arkusze CKE i klucze odpowiedzi z lat 2015-2025. Kliknij rok, aby rozwinac linki.</p>
+<div id="arkusze-list"></div>
+</div>
+</div>
+
+<!-- QUIZ -->
+<div id="tab-quiz" class="tab">
+<div class="container">
+<h2 style="color:#2d6a4f;margin-bottom:1rem">Quizy maturalne z biologii</h2>
+<div class="quiz-toolbar">
+<select id="f-cat"><option value="all">Wszystkie kategorie</option></select>
+<select id="f-year"><option value="all">Wszystkie lata</option></select>
+<button onclick="startQuiz()">Rozpocznij quiz</button>
+<button onclick="randomQuiz()" class="secondary">Losowe 10 pytan</button>
+<button onclick="randomQuiz(20)" class="secondary">Losowe 20</button>
+<button onclick="examMode()" class="secondary">Tryb egzaminu (30 pytan)</button>
+<button onclick="resetQuiz()" class="secondary">Resetuj</button>
+</div>
+<div class="score-bar">
+<div class="stat">Pytania: <strong id="s-total">0</strong></div>
+<div class="stat">Poprawne: <strong id="s-ok" style="color:#27ae60">0</strong></div>
+<div class="stat">Bledne: <strong id="s-bad" style="color:#c0392b">0</strong></div>
+<div class="stat">Wynik: <strong id="s-pct">0%</strong></div>
+</div>
+<div id="quiz-box"></div>
+<div id="quiz-pag" class="pagination"></div>
+</div>
+</div>
+
+
+<footer>&copy; 2026 Biologia - Matura</footer>
+
+<script src="pytania.js"></script>
+<script>
+// ===== NAV =====
+document.querySelectorAll('#nav button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('tab-'+b.dataset.tab).classList.add('active');
+    window.scrollTo(0,0);
+  });
+});
+
+// ===== ARKUSZE =====
+const arkuszData = [
+  {rok:2025,items:[
+    {name:"Arkusz - maj 2025 (formula 2023)",url:"https://arkusze.pl/maturalne/biologia-2025-maj-matura-rozszerzona.pdf"},
+    {name:"Odpowiedzi - maj 2025",url:"https://arkusze.pl/maturalne/biologia-2025-maj-matura-rozszerzona-odpowiedzi.pdf"},
+    {name:"Arkusz - maj 2025 (stara formula 2015)",url:"https://arkusze.pl/maturalne/biologia-2025-maj-matura-stara-rozszerzona.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2025-poziom-rozszerzony-formula-2023"}
+  ]},
+  {rok:2024,items:[
+    {name:"Arkusz - maj 2024 (formula 2023)",url:"https://arkusze.pl/maturalne/biologia-2024-maj-matura-rozszerzona.pdf"},
+    {name:"Odpowiedzi - maj 2024",url:"https://arkusze.pl/maturalne/biologia-2024-maj-matura-rozszerzona-odpowiedzi.pdf"},
+    {name:"Arkusz probny - grudzien 2024",url:"https://arkusze.pl/maturalne/biologia-2024-grudzien-probna-rozszerzona.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2024-poziom-rozszerzony-formula-2023"}
+  ]},
+  {rok:2023,items:[
+    {name:"Arkusz - maj 2023 (formula 2023)",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2023/Arkusze_egzaminacyjne/2023/Biologia/MBIP-R0-100-2305-arkusz.pdf"},
+    {name:"Zasady oceniania - 2023",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2023/Arkusze_egzaminacyjne/2023/Biologia/MBIP-R0-100-2305-zasady.pdf"},
+    {name:"Arkusz - maj 2023 (formula 2015)",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2023/Biologia/EBIP-R0-100-2305.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2023-poziom-rozszerzony-formula-2023"}
+  ]},
+  {rok:2022,items:[
+    {name:"Arkusz - maj 2022",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2022/Biologia/EBIP-R0-100-2205.pdf"},
+    {name:"Zasady oceniania - 2022",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2022/Biologia/EBIP-R0-100-2205-zasady.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2022-poziom-rozszerzony-nowy"}
+  ]},
+  {rok:2021,items:[
+    {name:"Arkusz - maj 2021",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2021/Biologia/poziom_rozszerzony/EBIP-R0-100-2105.pdf"},
+    {name:"Zasady oceniania - 2021",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2021/Biologia/poziom_rozszerzony/EBIP-R0-100-2105-zasady.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2021-poziom-rozszerzony-nowy"}
+  ]},
+  {rok:2020,items:[
+    {name:"Arkusz - maj 2020",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2020/Biologia/EBIP-R0-100-2006.pdf"},
+    {name:"Zasady oceniania - 2020",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2020/Biologia/EBIP-R0-100-2006-zasady.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2020-poziom-rozszerzony-nowy"}
+  ]},
+  {rok:2019,items:[
+    {name:"Arkusz - maj 2019",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2019/Biologia/EBIP-R0-100-1905.pdf"},
+    {name:"Zasady oceniania - 2019",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2019/Biologia/EBIP-R0-100-1905-zasady.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2019-poziom-rozszerzony-nowy"}
+  ]},
+  {rok:2018,items:[
+    {name:"Arkusz - maj 2018",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2018/Biologia/EBIP-R0-100-1805.pdf"},
+    {name:"Zasady oceniania - 2018",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2018/Biologia/EBIP-R0-100-1805-zasady.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2018-poziom-rozszerzony-nowy"}
+  ]},
+  {rok:2017,items:[
+    {name:"Arkusz - maj 2017",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2017/Biologia/EBIP-R0-100-1705.pdf"},
+    {name:"Zasady oceniania - 2017",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2017/Biologia/EBIP-R0-100-1705-zasady.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2017-poziom-rozszerzony-nowy"}
+  ]},
+  {rok:2016,items:[
+    {name:"Arkusz - maj 2016",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2016/Biologia/EBIP-R0-100-1605.pdf"},
+    {name:"Zasady oceniania - 2016",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2016/Biologia/EBIP-R0-100-1605-zasady.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2016-poziom-rozszerzony-nowy"}
+  ]},
+  {rok:2015,items:[
+    {name:"Arkusz - maj 2015",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2015/Biologia/EBIP-R0-100-1505.pdf"},
+    {name:"Zasady oceniania - 2015",url:"https://cke.gov.pl/images/_EGZAMIN_MATURALNY_OD_2015/Arkusze_egzaminacyjne/2015/Biologia/EBIP-R0-100-1505-zasady.pdf"},
+    {name:"Zadania z rozwiazaniami (BiologHelp)",url:"https://biologhelp.pl/matura/matura-maj-2015-poziom-rozszerzony-nowy"}
+  ]}
+];
+
+(function renderArkusze(){
+  const box=document.getElementById('arkusze-list');
+  box.innerHTML=arkuszData.map(y=>`
+    <div class="year-section">
+      <h3 onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span class="arrow">&#9654;</span> Matura ${y.rok}
+      </h3>
+      <div class="year-links">
+        ${y.items.map(i=>`<a href="${i.url}" target="_blank" rel="noopener">&#128196; ${i.name}</a>`).join('')}
+      </div>
+    </div>
+  `).join('');
+})();
+
+// ===== QUIZ ENGINE =====
+const PER=10;
+let pool=[],page=0,stats={ans:0,ok:0,bad:0},answered={};
+
+function initFilters(){
+  const cats=[...new Set(pytaniaMaturalne.map(q=>q.cat))].sort();
+  const years=[...new Set(pytaniaMaturalne.map(q=>q.rok))].sort((a,b)=>b-a);
+  const cs=document.getElementById('f-cat'),ys=document.getElementById('f-year');
+  cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;cs.appendChild(o)});
+  years.forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;ys.appendChild(o)});
+}
+
+function getFiltered(){
+  let r=pytaniaMaturalne;
+  const cat=document.getElementById('f-cat').value;
+  const year=document.getElementById('f-year').value;
+  if(cat!=='all')r=r.filter(q=>q.cat===cat);
+  if(year!=='all')r=r.filter(q=>q.rok==year);
+  return r;
+}
+
+function startQuiz(){pool=getFiltered();page=0;answered={};stats={ans:0,ok:0,bad:0};render()}
+function randomQuiz(n=10){pool=shuffle([...pytaniaMaturalne]).slice(0,n);page=0;answered={};stats={ans:0,ok:0,bad:0};render()}
+function examMode(){pool=shuffle([...pytaniaMaturalne]).slice(0,30);page=0;answered={};stats={ans:0,ok:0,bad:0};render()}
+function resetQuiz(){pool=pytaniaMaturalne;page=0;answered={};stats={ans:0,ok:0,bad:0};render()}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function render(){
+  const start=page*PER,items=pool.slice(start,start+PER);
+  const box=document.getElementById('quiz-box');
+  box.innerHTML=items.map(q=>`
+    <div class="q-card" id="q${q.id}">
+      <div class="q-meta">
+        <span class="badge badge-year">Matura ${q.rok}</span>
+        <span class="badge badge-cat">${q.cat}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="answers">
+        ${q.a.map((a,i)=>`<button class="ans-btn ${acls(q.id,i,q.c)}" onclick="pick(${q.id},${i},${q.c})" ${answered[q.id]!=null?'disabled':''}>${String.fromCharCode(65+i)}. ${a}</button>`).join('')}
+      </div>
+      <div class="q-exp" id="exp${q.id}" style="display:${answered[q.id]!=null?'block':'none'}">${q.exp}</div>
+    </div>
+  `).join('');
+  renderPag();
+  updateStats();
+}
+
+function acls(id,i,c){
+  if(answered[id]==null)return'';
+  if(i===c)return'ok locked';
+  if(i===answered[id]&&i!==c)return'wrong locked';
+  return'locked';
+}
+
+function pick(id,sel,cor){
+  if(answered[id]!=null)return;
+  answered[id]=sel;
+  stats.ans++;
+  sel===cor?stats.ok++:stats.bad++;
+  render();
+}
+
+function renderPag(){
+  const pages=Math.ceil(pool.length/PER),pag=document.getElementById('quiz-pag');
+  let h='';
+  if(pages>1)for(let i=0;i<pages;i++)h+=`<button class="${i===page?'active':''}" onclick="goPage(${i})">${i+1}</button>`;
+  pag.innerHTML=h;
+}
+
+function goPage(p){page=p;render();document.getElementById('tab-quiz').scrollIntoView({behavior:'smooth'})}
+
+function updateStats(){
+  document.getElementById('s-total').textContent=stats.ans;
+  document.getElementById('s-ok').textContent=stats.ok;
+  document.getElementById('s-bad').textContent=stats.bad;
+  document.getElementById('s-pct').textContent=stats.ans?Math.round(stats.ok/stats.ans*100)+'%':'0%';
+}
+
+initFilters();
+pool=pytaniaMaturalne;
+render();
+</script>
+</body>
+</html>
